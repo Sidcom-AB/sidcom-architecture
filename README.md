@@ -4,28 +4,43 @@ Shared architecture reference for all Sidcom projects. This repo defines convent
 
 ## How to Use
 
-### In a new project's CLAUDE.md
+### 1. Add as git submodule in your project
 
-Point to this repo so Claude Code always has access to the architecture:
-
-```markdown
-## Architecture Reference
-
-This project follows the Sidcom Architecture standard.
-Before making architectural decisions, fetch the relevant docs:
-
-- Overview: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/architecture.md
-- Frontend: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/frontend.md
-- Backend: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/backend.md
-- Database: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/database.md
-- Design System: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/design-system.md
-- Auth: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/auth.md
-- Security: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/security.md
-- Coding Standards: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/coding-standards.md
-- Git Workflow: https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/git-workflow.md
+```bash
+cd your-project
+git submodule add git@github.com:Sidcom-AB/sidcom-architecture.git .architecture
 ```
 
-### Quick Reference
+This creates an `.architecture/` folder with all docs available locally.
+
+### 2. Copy the template CLAUDE.md
+
+```bash
+cp .architecture/templates/CLAUDE.md ./CLAUDE.md
+```
+
+Edit the `PROJECT_NAME` and add any project-specific notes at the bottom.
+
+### 3. Update architecture docs (all projects)
+
+When architecture docs are updated in this repo, pull the latest in any project:
+
+```bash
+git submodule update --remote .architecture
+git add .architecture
+git commit -m "chore: update architecture docs"
+```
+
+### Cloning a project that uses this submodule
+
+```bash
+git clone --recurse-submodules git@github.com:Sidcom-AB/your-project.git
+
+# Or if already cloned without submodules:
+git submodule update --init
+```
+
+## Quick Reference
 
 | Decision | Standard |
 |----------|----------|
@@ -59,4 +74,4 @@ Before making architectural decisions, fetch the relevant docs:
 
 ## Templates
 
-- [CLAUDE.md](templates/CLAUDE.md) — Drop-in CLAUDE.md for new projects
+- [CLAUDE.md](templates/CLAUDE.md) — Drop-in CLAUDE.md for new projects (uses `.architecture/` submodule paths)

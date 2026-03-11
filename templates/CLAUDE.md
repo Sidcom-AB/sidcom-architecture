@@ -4,15 +4,37 @@
 
 This project follows the **Sidcom Architecture** standard.
 
-Reference docs (fetch when needed):
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/architecture.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/frontend.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/backend.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/database.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/design-system.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/auth.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/security.md
-- https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/docs/coding-standards.md
+### Setup
+
+If the `.architecture/` directory does not exist in this repo, run:
+
+```bash
+git submodule add git@github.com:Sidcom-AB/sidcom-architecture.git .architecture
+```
+
+If it exists but is empty, run:
+
+```bash
+git submodule update --init
+```
+
+### Reference Docs
+
+Read these BEFORE making any architectural decisions:
+
+- [Architecture & Principles](.architecture/docs/architecture.md)
+- [Frontend (Lit, Routing, Components)](.architecture/docs/frontend.md)
+- [Backend (Fastify, OpenAPI, Services)](.architecture/docs/backend.md)
+- [Database (PostgreSQL, Knex)](.architecture/docs/database.md)
+- [Design System (CSS Tokens, Theming)](.architecture/docs/design-system.md)
+- [Auth (Supabase)](.architecture/docs/auth.md)
+- [Security](.architecture/docs/security.md)
+- [Coding Standards](.architecture/docs/coding-standards.md)
+- [Git Workflow](.architecture/docs/git-workflow.md)
+- [Project Setup](.architecture/docs/project-setup.md)
+- [Deployment (Docker)](.architecture/docs/deployment.md)
+
+**NEVER add architectural decisions to this file.** Architecture lives in `.architecture/` (shared repo). This file is only for project-specific configuration.
 
 ## Quick Reference
 
@@ -50,3 +72,7 @@ npm run build            # Docker build
 - AI edits code only, never starts/stops servers
 - Allowed: `npm run lint`, `npm run test`, `npm run build`
 - Forbidden: `npm start`, `npm run dev`, `node server.js`
+
+## Project-Specific Notes
+
+<!-- Add project-specific config here (ports, env vars, special setup, etc.) -->
