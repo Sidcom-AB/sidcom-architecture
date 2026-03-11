@@ -2,45 +2,39 @@
 
 Shared architecture reference for all Sidcom projects. This repo defines conventions, patterns, and standards that every project must follow.
 
-## How to Use
+## Setup (New Project)
 
-### 1. Add as git submodule in your project
-
-```bash
-cd your-project
-git submodule add git@github.com:Sidcom-AB/sidcom-architecture.git .architecture
-```
-
-This creates an `.architecture/` folder with all docs available locally.
-
-### 2. Copy the templates
+One step — copy `.claude/settings.json` into your project:
 
 ```bash
-cp .architecture/templates/CLAUDE.md ./CLAUDE.md
-cp -r .architecture/templates/.claude ./.claude
+mkdir -p .claude
+curl -o .claude/settings.json https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/.claude/settings.json
 ```
 
-Edit `CLAUDE.md` — change `PROJECT_NAME` and add project-specific notes at the bottom.
+That's it. Next time Claude Code starts in this project, the Setup hook will:
 
-The `.claude/settings.json` includes a **Setup hook** that automatically initializes the submodule when Claude Code starts. If `.architecture/` is missing, it runs `git submodule add` automatically.
+1. Add `.architecture/` as a git submodule (if missing)
+2. Create `CLAUDE.md` from template (if missing)
+3. Confirm everything is ready
 
-### 3. Update architecture docs (all projects)
+## Setup (Cloning an Existing Project)
 
-When architecture docs are updated in this repo, pull the latest in any project:
+If someone clones a project that already has the submodule:
+
+```bash
+git clone --recurse-submodules git@github.com:Sidcom-AB/your-project.git
+```
+
+Or if Claude Code starts and the submodule is empty, the hook handles it automatically.
+
+## Updating Architecture Docs
+
+When this repo is updated, pull the latest in any project:
 
 ```bash
 git submodule update --remote .architecture
 git add .architecture
 git commit -m "chore: update architecture docs"
-```
-
-### Cloning a project that uses this submodule
-
-```bash
-git clone --recurse-submodules git@github.com:Sidcom-AB/your-project.git
-
-# Or if already cloned without submodules:
-git submodule update --init
 ```
 
 ## Quick Reference
@@ -77,5 +71,4 @@ git submodule update --init
 
 ## Templates
 
-- [CLAUDE.md](templates/CLAUDE.md) — Drop-in CLAUDE.md for new projects (uses `.architecture/` submodule paths)
-- [.claude/settings.json](templates/.claude/settings.json) — Setup hook that auto-initializes the architecture submodule
+- [CLAUDE.md](templates/CLAUDE.md) — Auto-copied by the Setup hook into new projects
