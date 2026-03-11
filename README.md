@@ -13,13 +13,16 @@ git submodule add git@github.com:Sidcom-AB/sidcom-architecture.git .architecture
 
 This creates an `.architecture/` folder with all docs available locally.
 
-### 2. Copy the template CLAUDE.md
+### 2. Copy the templates
 
 ```bash
 cp .architecture/templates/CLAUDE.md ./CLAUDE.md
+cp -r .architecture/templates/.claude ./.claude
 ```
 
-Edit the `PROJECT_NAME` and add any project-specific notes at the bottom.
+Edit `CLAUDE.md` — change `PROJECT_NAME` and add project-specific notes at the bottom.
+
+The `.claude/settings.json` includes a **Setup hook** that automatically initializes the submodule when Claude Code starts. If `.architecture/` is missing, it runs `git submodule add` automatically.
 
 ### 3. Update architecture docs (all projects)
 
@@ -75,3 +78,4 @@ git submodule update --init
 ## Templates
 
 - [CLAUDE.md](templates/CLAUDE.md) — Drop-in CLAUDE.md for new projects (uses `.architecture/` submodule paths)
+- [.claude/settings.json](templates/.claude/settings.json) — Setup hook that auto-initializes the architecture submodule
