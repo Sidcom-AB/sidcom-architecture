@@ -49,8 +49,8 @@ npm install -D fastify-plugin
 ```json
 {
   "scripts": {
-    "dev": "node --watch src/backend/server.js",
-    "start": "node src/backend/server.js",
+    "dev": "knex migrate:latest && node --watch src/backend/server.js",
+    "start": "knex migrate:latest && node src/backend/server.js",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",

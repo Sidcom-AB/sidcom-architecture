@@ -115,8 +115,8 @@ async function getUserById(id) { }
     "node": ">=20.0.0"
   },
   "scripts": {
-    "dev": "node --watch src/backend/server.js",
-    "start": "node src/backend/server.js",
+    "dev": "knex migrate:latest && node --watch src/backend/server.js",
+    "start": "knex migrate:latest && node src/backend/server.js",
     "migrate": "knex migrate:latest",
     "migrate:make": "knex migrate:make",
     "migrate:rollback": "knex migrate:rollback",
@@ -128,7 +128,8 @@ async function getUserById(id) { }
 
 ## Development Workflow
 
-- **`npm run dev`** for development (Node `--watch` for auto-reload)
+- **`npm run dev`** for development — runs migrations first, then starts Node with `--watch` for auto-reload
+- **`npm start`** for production — runs migrations first, then starts the server
 - Never kill/restart the dev server to test changes — `--watch` handles it
 - AI assistants: edit files only, never start servers
 - User starts the server, AI edits code

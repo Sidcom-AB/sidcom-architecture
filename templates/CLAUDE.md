@@ -55,13 +55,14 @@ Read these BEFORE making any architectural decisions:
 - CSS variables only — no hardcoded colors
 - Fastify JSON Schema on every route
 - Multi-tenant: all queries scoped by tenant
-- `npm run dev` uses `--watch` — never restart manually
+- `npm run dev` runs migrations then starts with `--watch` — never restart manually
 
 ## Development
 
 ```bash
-npm run dev              # Dev server with --watch
-npm run migrate          # Run database migrations
+npm run dev              # Migrate + dev server with --watch
+npm start                # Migrate + start server (production)
+npm run migrate          # Run database migrations only
 npm run migrate:make     # Create new migration
 npm run build            # Docker build
 ```

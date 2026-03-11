@@ -19,9 +19,9 @@ RUN npm ci --omit=dev
 COPY src/ ./src/
 COPY knexfile.js ./
 
-# Run migrations and start
+# Start (npm start runs migrations automatically)
 EXPOSE 3000
-CMD ["sh", "-c", "npm run migrate && node src/backend/server.js"]
+CMD ["npm", "start"]
 ```
 
 ### .dockerignore
