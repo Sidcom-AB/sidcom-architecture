@@ -449,6 +449,61 @@ export class ForbiddenError extends AppError {
 }
 ```
 
+## Real-Time Communication (WebSocket)
+
+All real-time features use **WebSocket** with an event-bus pattern. Never use HTTP polling, long-polling, or Server-Sent Events (SSE).
+
+### Why WebSocket
+
+- Bidirectional: server can push events to clients
+- Low latency: persistent connection, no HTTP overhead per message
+- Event-driven: aligns with our architectural pattern of reactive updates
+- One connection per client: simple multiplexing via event types
+
+### WebSocket Setup
+
+Use the `ws` library with Fastify's `noServer` mode for manual upgrade routing:
+
+```javascript
+// src/backend/plugins/websocket.js
+import { WebSocketServer } from 'ws';
+
+const wss = new WebSocketServer({ noServer: true });
+
+// Handle upgrade in server.js
+app.server.on('upgrade', (req, socket, head) => {
+  const { pathname } = new URL(req.url, 'http://localhost');
+  if (pathname === '/ws') {
+    wss.handleUpgrade(req, socket, head, (ws) => {
+      wss.emit('connection', ws, req);
+    });
+  }
+});
+```
+
+### Event Protocol
+
+All messages are JSON with an `event` field:
+
+```javascript
+// Server → Client
+{ "event": "resource:updated", "data": { ... } }
+{ "event": "slide:updated", "section": 0, "slide": 1, "data": { ... } }
+
+// Client → Server
+{ "event": "subscribe", "id": "resource-uuid" }
+{ "event": "capture:response", "requestId": "...", "dataUrl": "..." }
+```
+
+### Rules
+
+- **WebSocket only** — no SSE, no HTTP long-polling, no short-polling
+- **Event-bus pattern** — clients subscribe by resource ID, server broadcasts to relevant clients
+- **JSON protocol** — all messages are `JSON.stringify`/`JSON.parse`
+- **Scoped connections** — each WebSocket connection is scoped to a resource (e.g. presentation ID via `?id=UUID`)
+- **Multiple paths** — use separate WebSocket paths for different concerns (e.g. `/ws` for data, `/ws/agent` for AI)
+- **Graceful degradation** — app should work (read-only) if WebSocket fails to connect
+
 ## IMPORTANT: Fastify Response Schema
 
 Fastify validates responses against the schema. **Fields not declared in the response schema are silently removed.** Always ensure every returned field is listed in the schema.
