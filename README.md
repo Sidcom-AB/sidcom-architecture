@@ -4,11 +4,8 @@ Shared architecture reference for all Sidcom projects. This repo defines convent
 
 ## Setup (New Project)
 
-One step — copy `.claude/settings.json` into your project:
-
 ```bash
-mkdir -p .claude
-curl -o .claude/settings.json https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/.claude/settings.json
+curl -fsSL https://raw.githubusercontent.com/Sidcom-AB/sidcom-architecture/main/setup.sh | bash
 ```
 
 That's it. Next time Claude Code starts in this project, the Setup hook will:
